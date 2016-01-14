@@ -2,9 +2,6 @@
 //  AppDelegate.swift
 //  MFFDynamics
 //
-//  Created by Ryšánek David on 14/01/16.
-//  Copyright © 2016 mff. All rights reserved.
-//
 
 import UIKit
 
