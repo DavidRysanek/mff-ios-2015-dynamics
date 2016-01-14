@@ -8,12 +8,15 @@ import UIKit
 class ViewController: UIViewController, UICollisionBehaviorDelegate
 {
     var animator: UIDynamicAnimator!
+    var gravity: UIGravityBehavior?
+    var square: UIView!
+    
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        let square = UIView(frame: CGRect(x: 150, y: 70, width: 100, height: 100))
+        square = UIView(frame: CGRect(x: 150, y: 70, width: 100, height: 100))
         square.backgroundColor = UIColor.greenColor()
         view.addSubview(square)
         
@@ -29,10 +32,6 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate
         
         // According to a given set of rules, the animator adjusts the location of each object each time the screen is redrawn.
         animator = UIDynamicAnimator(referenceView: view)
-        
-        // Gravity
-        let gravity = UIGravityBehavior(items: [square])
-        animator.addBehavior(gravity)
         
         // Collisions
         let collision = UICollisionBehavior(items: [square])
@@ -59,6 +58,16 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate
         collidingView.backgroundColor = UIColor.redColor()
         UIView.animateWithDuration(0.3) {
             collidingView.backgroundColor = UIColor.greenColor()
+        }
+    }
+    
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)
+    {
+        // Add gravity after first touch
+        if gravity == nil {
+            gravity = UIGravityBehavior(items: [square])
+            animator.addBehavior(gravity!)
         }
     }
 }
