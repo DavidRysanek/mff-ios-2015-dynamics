@@ -7,7 +7,8 @@ import UIKit
 
 class ViewController: UIViewController
 {
-
+    var animator: UIDynamicAnimator!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -24,6 +25,14 @@ class ViewController: UIViewController
         circle.backgroundColor = UIColor.grayColor()
         circle.layer.cornerRadius = circle.frame.size.width / 2
         view.addSubview(circle)
+        
+        
+        // According to a given set of rules, the animator adjusts the location of each object each time the screen is redrawn.
+        animator = UIDynamicAnimator(referenceView: view)
+        
+        // Gravity
+        let gravity = UIGravityBehavior(items: [square])
+        animator.addBehavior(gravity)
     }
     
 }
