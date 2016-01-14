@@ -33,6 +33,14 @@ class ViewController: UIViewController
         // Gravity
         let gravity = UIGravityBehavior(items: [square])
         animator.addBehavior(gravity)
+        
+        // Collisions
+        let collision = UICollisionBehavior(items: [square])
+        // Add a boundaries that has the same frame as barriers
+        collision.addBoundaryWithIdentifier("barrier", forPath: UIBezierPath(rect: barrier.frame))
+        collision.addBoundaryWithIdentifier("circle", forPath: UIBezierPath(roundedRect: circle.frame, cornerRadius: circle.layer.cornerRadius))
+        collision.translatesReferenceBoundsIntoBoundary = true
+        animator.addBehavior(collision)
     }
     
 }
