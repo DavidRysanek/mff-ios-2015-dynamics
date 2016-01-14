@@ -9,6 +9,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate
 {
     var animator: UIDynamicAnimator!
     var gravity: UIGravityBehavior?
+    var snap: UISnapBehavior?
     var square: UIView!
     
     
@@ -68,6 +69,19 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate
         if gravity == nil {
             gravity = UIGravityBehavior(items: [square])
             animator.addBehavior(gravity!)
+        } else {
+            // On every next touch...
+            if snap != nil {
+                // Unsnap object (gravity is applied again)
+                animator.removeBehavior(snap!)
+                snap = nil
+            } else {
+                // Snap object to touch location. That "overrides" gravity.
+                if let touch = touches.first {
+                    snap = UISnapBehavior(item: square, snapToPoint: touch.locationInView(view))
+                    animator.addBehavior(snap!)
+                }
+            }
         }
     }
 }
