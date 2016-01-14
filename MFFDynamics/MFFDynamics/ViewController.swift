@@ -41,6 +41,14 @@ class ViewController: UIViewController
         collision.addBoundaryWithIdentifier("circle", forPath: UIBezierPath(roundedRect: circle.frame, cornerRadius: circle.layer.cornerRadius))
         collision.translatesReferenceBoundsIntoBoundary = true
         animator.addBehavior(collision)
+
+        // Physical properties
+        let itemBehaviour = UIDynamicItemBehavior(items: [square])
+        // Bouncines. Usually between 0 (inelastic) and 1 (collide elastically)
+        itemBehaviour.elasticity = 0.6
+        // Sliding ressistance. 0 being no friction between objects slide along each other
+        itemBehaviour.friction = 0.5
+        animator.addBehavior(itemBehaviour)
     }
     
 }
