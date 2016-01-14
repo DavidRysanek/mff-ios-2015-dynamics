@@ -5,7 +5,7 @@
 
 import UIKit
 
-class ViewController: UIViewController
+class ViewController: UIViewController, UICollisionBehaviorDelegate
 {
     var animator: UIDynamicAnimator!
     
@@ -36,6 +36,7 @@ class ViewController: UIViewController
         
         // Collisions
         let collision = UICollisionBehavior(items: [square])
+        collision.collisionDelegate = self
         // Add a boundaries that has the same frame as barriers
         collision.addBoundaryWithIdentifier("barrier", forPath: UIBezierPath(rect: barrier.frame))
         collision.addBoundaryWithIdentifier("circle", forPath: UIBezierPath(roundedRect: circle.frame, cornerRadius: circle.layer.cornerRadius))
@@ -51,5 +52,14 @@ class ViewController: UIViewController
         animator.addBehavior(itemBehaviour)
     }
     
+    
+    func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying?, atPoint p: CGPoint)
+    {
+        let collidingView = item as! UIView
+        collidingView.backgroundColor = UIColor.redColor()
+        UIView.animateWithDuration(0.3) {
+            collidingView.backgroundColor = UIColor.greenColor()
+        }
+    }
 }
 
